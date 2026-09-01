@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jose Toyo | Portfolio</title>
+    <link rel="preload" href="assets/fonts/SpaceMono.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="style.css" as="style">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="loader" aria-label="Cargando">
+      <div class="loader-text">
+        <span class="word">José</span>
+        <span class="word">Toyo</span>
+        <span class="word word5">|</span>
+        <span class="word word5">Portfolio</span>
+      </div>
+    </div>
+
+    <!-- Efecto CRT (Scanlines + Noise) -->
+    <div class="crt-overlay" aria-hidden="true"></div>
+
+    <div class="window-container">
+        <!-- Barra de ventana superior -->
+        <header class="window-bar">
+            <span class="window-title">root@portfolio:~$</span>
+            <div class="window-controls">
+                <span class="ctrl min">_</span>
+                <span class="ctrl max">□</span>
+                <span class="ctrl close">X</span>
+            </div>
+        </header>
+
+        <main class="terminal-body" id="scroll-container">
+            
+            <!-- HERO SECTION -->
+            <section id="hero" class="section reveal">
+                <pre class="ascii-art" aria-hidden="true">
+      __     ______     ______     ______      
+     /\ \   /\  __ \   /\  ___\   /\  ___\     
+    _\_\ \  \ \ \/\ \  \ \___  \  \ \  __\     
+   /\_____\  \ \_____\  \/\_____\  \ \_____\   
+   \/_____/   \/_____/   \/_____/   \/_____/   
+                                               
+    ______   ______     __  __     ______      
+   /\__  _\ /\  __ \   /\ \_\ \   /\  __ \     
+   \/_/\ \/ \ \ \/\ \  \ \____ \  \ \ \/\ \    
+      \ \_\  \ \_____\  \/\_____\  \ \_____\   
+       \/_/   \/_____/   \/_____/   \/_____/   
+                </pre>
+                
+                <div class="cmd-line">
+                    <span class="prompt">$ whoami --</span>
+                </div>
+                <div class="typewriter-container">
+                    <span class="prompt-arrow">></span>
+                    <span id="typewriter-text"></span><span class="cursor">_</span>
+                </div>
+                
+                <div class="cmd-line mt-2">
+                    <span class="prompt user-prompt">@portfolio:~$</span>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="#projects" class="term-btn">[ Projects ]</a>
+                    <a href="#contact" class="term-btn">[ Contact ]</a>
+                </div>
+            </section>
+
+            <!-- ABOUT SECTION -->
+            <section id="about" class="section reveal">
+                <div class="cmd-line">
+                    <h2 class="prompt">$ about --</h2>
+                </div>
+                <div class="window-box output-block">
+                    <p><span class="highlight-purple">Hi, I'm</span> José Toyo</p>
+                    <p><span class="highlight-purple">I work at</span> the intersection of graphic design, UI, and frontend development.</p>
+                    <p><span class="highlight-purple">Crafting</span> visual identities and digital experiences through experimentation and creative thinking.</p>
+                </div>
+            </section>
+
+            <!-- PROJECTS SECTION -->
+            <section id="projects" class="section reveal">
+                <div class="cmd-line">
+                    <h2 class="prompt">$ ls projects/</h2>
+                    <span class="counter-text ml-auto">-- <span id="project-count">0</span> archives</span>
+                </div>
+                
+                <div class="filters mt-1">
+                    <button type="button" class="filter-btn active" data-filter="all">[all]</button>
+                    <button type="button" class="filter-btn" data-filter="web">[frontend]</button>
+                    <button type="button" class="filter-btn" data-filter="design">[graphic-design]</button>
+                </div>
+
+                <div class="project-grid mt-2">
+                    <!-- Project 1 -->
+                    <article class="project-card stagger-item" data-category="web" data-theme="pink">
+                        <div class="project-header">
+                            <span class="icon">&#x1F5C2;</span>
+                            <h3 class="filename">landing_page/</h3>
+                        </div>
+                        <div class="project-details">
+                            <div class="project-gallery" data-theme="pink" data-images="assets/hero,assets/toggle,assets/form">
+                                <div class="project-main-media" data-index="0" role="button" tabindex="0" aria-label="Ver imagen principal del proyecto">
+                                    <span class="media-label">/</span>
+                                </div>
+                                <div class="project-thumbs">
+                                    <button class="thumb is-active" type="button" data-index="0" aria-label="Ver imagen 1"></button>
+                                    <button class="thumb" type="button" data-index="1" aria-label="Ver imagen 2"></button>
+                                    <button class="thumb" type="button" data-index="2" aria-label="Ver imagen 3"></button>
+                                </div>
+                            </div>
+                            <p class="project-desc">Landing page -- portfolio / form for tattoo artist.</p>
+                            <p class="project-tech">Tech: html, css, js, Photoshop</p>
+                            <p class="project-year">- 2025</p>
+                            <div class="project-links">
+                                <a href="https://toyooart.github.io/" target="_blank" rel="noopener noreferrer" class="link-btn">> Demo</a>
+                                <a href="https://github.com/jtoyoo/web-tattooer" target="_blank" rel="noopener noreferrer" class="link-btn">> GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 2 -->
+                    <article class="project-card stagger-item" data-category="design" data-theme="cyan">
+                        <div class="project-header">
+                            <span class="icon">&#x1F5C2;</span>
+                            <h3 class="filename">packaging/</h3>
+                        </div>
+                        <div class="project-details">
+                            <div class="project-gallery" data-theme="cyan" data-images="assets/packaging,assets/merch,assets/pattern">
+                                <div class="project-main-media" data-index="0" role="button" tabindex="0" aria-label="Ver imagen principal del proyecto">
+                                    <span class="media-label">packaging</span>
+                                </div>
+                                <div class="project-thumbs">
+                                    <button class="thumb is-active" type="button" data-index="0" aria-label="Ver imagen 1"></button>
+                                    <button class="thumb" type="button" data-index="1" aria-label="Ver imagen 2"></button>
+                                    <button class="thumb" type="button" data-index="2" aria-label="Ver imagen 3"></button>
+                                </div>
+                            </div>
+                            <p class="project-desc">Consumer-connected packaging design.</p>
+                            <p class="project-tech">Tech: Illustrator, Photoshop</p>
+                            <p class="project-year">-- 2021</p>
+                            <div class="project-links"></div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3 -->
+                    <article class="project-card stagger-item" data-category="design" data-theme="purple">
+                        <div class="project-header">
+                            <span class="icon">&#x1F5C2;</span>
+                            <h3 class="filename">visual_identity/</h3>
+                        </div>
+                        <div class="project-details">
+                            <div class="project-gallery" data-theme="purple" data-images="assets/lettermark,assets/isologo,assets/custom"> 
+                                <div class="project-main-media" data-index="0" role="button" tabindex="0" aria-label="Ver imagen principal del proyecto">
+                                    <span class="media-label">lettermark</span>
+                                </div>
+                                <div class="project-thumbs">
+                                    <button class="thumb is-active" type="button" data-index="0" aria-label="Ver imagen 1"></button>
+                                    <button class="thumb" type="button" data-index="1" aria-label="Ver imagen 2"></button>
+                                    <button class="thumb" type="button" data-index="2" aria-label="Ver imagen 3"></button>
+                                </div>
+                            </div>
+                            <p class="project-desc">Visual identity focused on defining the brand's personality.</p>
+                            <p class="project-tech">Tech: Photoshop, Procreate</p>
+                            <p class="project-year">-- 2025</p>
+                            <div class="project-links">
+                                <a href="https://www.deviantart.com/toyo1" target="_blank" rel="noopener noreferrer" class="link-btn">> devianArt</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 4 -->
+                    <article class="project-card stagger-item" data-category="web" data-theme="violet">
+                        <div class="project-header">
+                            <span class="icon">&#x1F5C2;</span>
+                            <h3 class="filename">portfolio/</h3>
+                        </div>
+                        <div class="project-details">
+                            <div class="project-gallery" data-theme="violet" data-images="assets/terminal,assets/gallery,assets/details">
+                                <div class="project-main-media" data-index="0" role="button" tabindex="0" aria-label="Ver imagen principal del proyecto">
+                                    <span class="media-label">gallery</span>
+                                </div>
+                                <div class="project-thumbs">
+                                    <button class="thumb is-active" type="button" data-index="0" aria-label="Ver imagen 1"></button>
+                                    <button class="thumb" type="button" data-index="1" aria-label="Ver imagen 2"></button>
+                                    <button class="thumb" type="button" data-index="2" aria-label="Ver imagen 3"></button>
+                                </div>
+                            </div>
+                            <p class="project-desc">Personal portfolio with a terminal/cyberpunk aesthetic.</p>
+                            <p class="project-tech">Tech: HTML, CSS, JavaScript</p>
+                            <p class="project-year">-- 2026</p>
+                            <div class="project-links">
+                                <a href="https://github.com/jtoyoo" target="_blank" rel="noopener noreferrer" class="link-btn">> GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- EXPERIENCE SECTION -->
+            <section id="experience" class="section reveal">
+                <div class="cmd-line">
+                    <h2 class="prompt">$ history --</h2>
+                </div>
+                <div class="history-list output-block">
+                    <div class="history-item stagger-item">
+                        <span class="year">2025</span>
+                        <span class="role">Freelance Frontend Developer</span>
+                    </div>
+                    <div class="history-item stagger-item">
+                        <span class="year">2023</span>
+                        <span class="role">UI Designer</span>
+                    </div>
+                    <div class="history-item stagger-item">
+                        <span class="year">2015</span>
+                        <span class="role">Graphic Designer</span>
+                    </div>
+                    <div class="history-item stagger-item">
+                        <span class="year">2012</span>
+                        <span class="role">IT Support</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SERVICES SECTION -->
+            <section id="services" class="section reveal">
+                <div class="cmd-line">
+                    <h2 class="prompt">$ ps -a</h2>
+                </div>
+                <div class="services-list output-block">
+                    <div class="service-header">
+                        <span class="pid">PID</span>
+                        <span class="srv">SERVICE</span>
+                    </div>
+                    <div class="service-item stagger-item">
+                        <span class="pid highlight-blue">001</span>
+                        <span class="srv">Frontend Development</span>
+                    </div>
+                    <div class="service-item stagger-item">
+                        <span class="pid highlight-blue">002</span>
+                        <span class="srv">Web Design</span>
+                    </div>
+                    <div class="service-item stagger-item">
+                        <span class="pid highlight-blue">003</span>
+                        <span class="srv">Branding & Identity</span>
+                    </div>
+                    <div class="service-item stagger-item">
+                        <span class="pid highlight-blue">004</span>
+                        <span class="srv">Illustration</span>
+                    </div>
+                </div>
+                
+                <div class="cmd-line mt-2">
+                    <h2 class="prompt">$ skills --</h2>
+                </div>
+                <ul class="skills-list output-block">
+                    <li class="stagger-item"><span class="bullet">▪</span> HTML5/CSS3/JavaScript</li>
+                    <li class="stagger-item"><span class="bullet">▪</span> Figma/PS/AI</li>
+                    <li class="stagger-item"><span class="bullet">▪</span> Git/GitHub</li>
+                </ul>
+            </section>
+
+            <!-- FOOTER SECTION -->
+            <section id="contact" class="section reveal mt-3">
+                <div class="cmd-line">
+                    <h2 class="prompt">$ cd contact/</h2>
+                </div>
+                <div class="cmd-line">
+                    <span class="highlight-purple">$ links --</span>
+                </div>
+                <div class="output-block link-list">
+                    <a href="mailto:jtoyo013@gmail.com" target="_blank" rel="noopener noreferrer" class="stagger-item">> --email.</a>
+                    <a href="https://github.com/jtoyoo/" target="_blank" rel="noopener noreferrer" class="stagger-item">> --github.</a>
+                    <a href="https://www.linkedin.com/in/jtoyo/" target="_blank" rel="noopener noreferrer" class="stagger-item">> --linkedin.</a>
+                </div>
+            </section> 
+            <footer>
+                <div class="footer">
+                    <span class="prompt highlight-pink">$ exit</span>
+                </div>
+                <div class="output-block muted-text">
+                    <p>Connection closed.</p>
+                    <p>©<time>2026</time> Jose Toyo</p>
+                </div>
+            </footer>
+        </main>
+
+       
+    </div>
+
+    <div class="project-lightbox" id="project-lightbox" aria-hidden="true">
+        <div class="lightbox-bubble">
+            <button class="lightbox-close" type="button" aria-label="Cerrar imagen">×</button>
+            <div class="lightbox-stage">
+                <button class="lightbox-nav prev" type="button" aria-label="Imagen anterior">‹</button>
+                <div class="lightbox-media" id="lightbox-media"></div>
+                <button class="lightbox-nav next" type="button" aria-label="Imagen siguiente">›</button>
+            </div>
+            <div class="lightbox-dots" id="lightbox-dots"></div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
