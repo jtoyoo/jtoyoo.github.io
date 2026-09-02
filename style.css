@@ -967,3 +967,19 @@ body.lightbox-open {
         right: -2px;
     }
 }
+
+@media (max-width: 932px) and (orientation: landscape) {
+    html, body {
+        display: block !important;
+        height: auto !important;
+        min-height: 100dvh !important;
+        overflow-y: auto !important;
+    }    
+
+    .window-container {
+        height: 90dvh !important;
+        max-height: none !important;
+        margin: 20px auto !important;
+        overflow-y: visible !important;
+    }
+}
