@@ -600,7 +600,6 @@ body>*:not(.project-lightbox):not(.crt-overlay) {
     padding: 12px;
     font-family: var(--font-mono);
     color: var(--text-main);
-    border-radius: 12px;
     will-change: transform;
     backface-visibility: hidden;
 }
@@ -633,7 +632,6 @@ body>*:not(.project-lightbox):not(.crt-overlay) {
     border: 1px solid rgba(255, 255, 255, 0.077);
     background: linear-gradient(135deg, var(--c-pink), var(--c-blue));
     height: 38px;
-    border-radius: 8px;
     cursor: pointer;
     transition: opacity 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
     opacity: 0.8;
@@ -765,8 +763,10 @@ body>*:not(.project-lightbox):not(.crt-overlay) {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     will-change: transform;
     backface-visibility: hidden;
+    margin: 0;
 }
 
 .project-lightbox.visible .lightbox-bubble {
@@ -801,7 +801,6 @@ body>*:not(.project-lightbox):not(.crt-overlay) {
     height: 100%;
     min-height: 220px;
     border: 1px solid rgba(255, 255, 255, 0.095);
-    border-radius: 22px;
     background: linear-gradient(135deg, var(--c-pink), var(--c-blue), var(--c-purple));
     position: relative;
     overflow: hidden;
@@ -812,18 +811,20 @@ body>*:not(.project-lightbox):not(.crt-overlay) {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
+    width: 45px;
+    height: 60px;
     border: 1px solid rgba(255, 255, 255, 0.017);
-    background: rgba(9, 10, 18, 0.4);
+    background: none;
+    border: none;
+    padding: 0;
     color: var(--text-main);
-    font-size: 28px;
+    font-size: 35px;
+    filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.8))
+            drop-shadow(0px 0px 1px rgba(0, 0, 0, 1));
     line-height: 1;
     cursor: pointer;
     z-index: 2;
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
+    transition: transform 0.25s ease, opacity 0.2s ease, opacity 0.2s ease;
 }
 
 .lightbox-nav.prev {
@@ -942,6 +943,7 @@ body.lightbox-open {
 
     .lightbox-bubble {
         width: min(90vw, 420px);
+        height: min(72vw, 320px);
     }
 
     .lightbox-stage {
@@ -974,6 +976,13 @@ body.lightbox-open {
         height: auto !important;
         min-height: 100dvh !important;
         overflow-y: auto !important;
+
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100dvh !important;
+        z-index: -1 !important;
     }    
 
     .window-container {
