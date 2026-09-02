@@ -903,14 +903,28 @@ body.lightbox-open {
         padding: 15px;
     }
 
+    html,body {
+        display: flex !important;
+        justify-content: center !important;
+        overflow-y: auto !important;
+        align-items: center !important;
+        height: 100dvh !important;
+        min-height: 90dvh !important;
+        overflow: hidden !important;
+    }
     .window-container {
-        width: 98%;
-        min-height: 80dvh;
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        margin: 0 auto !important;
+        width: 98% !important;
+        max-height: 95dvh !important;
         border-radius: var(--border-radius);
         background-color: var(--bg-window);
         border: 1px solid var(--border-color);
         box-shadow: 0 0 var(--glow-spread) rgba(124, 87, 246, 0.2);
-        overscroll-behavior-y: auto;
+        overscroll-behavior-y: auto !important;
         -webkit-overflow-scrolling: touch;
     }
 
