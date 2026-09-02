@@ -193,7 +193,7 @@ body>*:not(.project-lightbox):not(.crt-overlay) {
 .window-container {
     width: 95%;
     max-width: 900px;
-    height: 90vh;
+    height: 90dvh;
     background-color: var(--bg-window);
     border: 1px solid var(--border-color);
     box-shadow: 0 0 var(--glow-spread) rgba(124, 87, 246, 0.2);
@@ -202,6 +202,7 @@ body>*:not(.project-lightbox):not(.crt-overlay) {
     border-radius: var(--border-radius);
     position: relative;
     z-index: 10;
+    overflow-y: auto;
 }
 
 .window-bar {
@@ -897,22 +898,20 @@ body.lightbox-open {
     color: var(--c-blue);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .terminal-body {
         padding: 15px;
     }
 
     .window-container {
         width: 98%;
-        height: 80vh;
+        min-height: 80dvh;
         border-radius: var(--border-radius);
         background-color: var(--bg-window);
         border: 1px solid var(--border-color);
         box-shadow: 0 0 var(--glow-spread) rgba(124, 87, 246, 0.2);
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        z-index: 10;
+        overscroll-behavior-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .window-bar {
