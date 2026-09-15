@@ -1,0 +1,21 @@
+{
+  "name": "Jose Toyo | Portfolio",
+  "short_name": "Jose Toyo",
+  "icons": [
+    {
+      "src": "/assets/favicons/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/favicons/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#7955EF",
+  "background_color": "#05060E",
+  "display": "standalone"
+}
