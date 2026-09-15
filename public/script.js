@@ -20,19 +20,22 @@ function getSceneBackground(theme, index) {
     return sceneMap[index % 3](colors);
 }
 
-//LOADER
+// LOADER
 window.addEventListener("load", () => {
-    const loader = document.getElementById("loader");
+    const aloader = document.getElementById("aloader");
 
-    // Mantiene el loader visible inicialmente
+    if (!aloader) return;
+
+    // Esperamos 3.1 segundos antes de iniciar la desaparición
     setTimeout(() => {
-        loader.classList.add("hide");
+        aloader.classList.add("hide");
 
-        // Lo elimina cuando terminan las transiciones
+        // Lo eliminamos después de la transición
         setTimeout(() => {
-            loader.classList.add("removed");
-        }, 1700);
-    }, 1200);
+            aloader.classList.add("removed");
+        }, 3500);
+
+    }, 3100);
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -499,6 +502,32 @@ document.addEventListener('DOMContentLoaded', () => {
 2026
           </pre>
         </div>
+        <button 
+  onclick="salirDePantalla()" 
+  style="
+                position: absolute; 
+                bottom: 0px; 
+                right: 2px; 
+                z-index: 9999;
+                padding: 4px 4px;
+                background: rgba(124, 87, 246, 0.2);
+                color: rgba(255, 255, 255, 0.589);
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-family: sans-serif;
+                font-weight: bold;
+  "
+>
+    🢀Back
+</button>
+
+<script>
+  function salirDePantalla() {
+    // Envía la señal al componente padre (React)
+    window.parent.postMessage('CLOSE_SCREEN', '*');
+  }
+</script>
         `;
     });
 });

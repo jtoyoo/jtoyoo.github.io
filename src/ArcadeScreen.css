@@ -1,0 +1,56 @@
+.arcade-html-container {
+  width: 900px;
+  height: 800px;
+  max-width: 900px;
+  background-color: #000;
+  overflow: hidden;
+  border-radius: 4px;
+  transform: rotate(90.5deg);
+  transition: all 0.3s ease;
+}
+
+/* 📱 Las reglas responsivas solo se aplicarán cuando la pantalla esté seleccionada (.zoomed) */
+@media (max-width: 3840px) {
+  .arcade-html-container.zoomed {
+    width: 690px;
+    height: 650px;
+    max-height: 75dvh;
+    overflow-y: auto;
+  }
+}
+@media (max-width: 2048px) {
+  .arcade-html-container.zoomed {
+    width: 660px;
+    height: 610px;
+    max-height: 75dvh;
+    overflow-y: auto;
+
+  }
+}
+
+@media (max-width: 1024px) {
+  .arcade-html-container.zoomed {
+    width: 530px;
+    height: 650px;
+    max-height: 75dvh;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .arcade-html-container.zoomed {
+    width: 480px;
+    height: 600px;
+    max-height: 75dvh;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .arcade-html-container.zoomed {
+    width: 330px;
+    height: 650px;
+    max-height: 75dvh;
+    overflow-y: auto;
+  }
+}

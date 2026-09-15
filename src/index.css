@@ -1,0 +1,182 @@
+@font-face {
+  font-family: 'Fuente1';
+  src: url('../assets/fonts/SpaceMono.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-mono: 'Fuente1', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+}
+
+/*LOADER*/
+#loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #010105f0; 
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-image: 
+    radial-gradient(at 0% 0%, rgba(5, 1, 18, 0.562) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(25, 1, 19, 0.494) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(12, 6, 22, 0.447) 0px, transparent 70%);
+    background-attachment: fixed;
+}
+
+.loader-text {
+    display: flex;
+    gap: 0.5em;
+
+    font-family: var(--font-mono);
+    color: var(--text-main);
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+.word {
+    opacity: 1;
+    transition: opacity 0.6s ease;
+}
+
+.word5 {
+    opacity: 0.5;
+    transition: opacity 0.6s ease;
+}
+
+/* Desaparición escalonada entre palabras */
+#loader.hide .word:nth-child(1) {
+    opacity: 0;
+    transition-delay: 0s;
+}
+
+#loader.hide .word:nth-child(2) {
+    opacity: 0;
+    transition-delay: 0.20s;
+}
+
+#loader.hide .word:nth-child(3) {
+    opacity: 0;
+    transition-delay: 0.3s;
+}
+
+#loader.hide .word:nth-child(4) {
+    opacity: 0;
+    transition-delay: 0.4s;
+}
+
+/* El fondo desaparece después del texto */
+#loader.hide {
+    opacity: 0;
+    transition-delay: 0.9s;
+}
+
+#loader.removed {
+    display: none;
+}
+
+#loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Fondo 100% opaco para que NADA del 3D se transparente */
+    background-color: #010105; 
+    background-image: 
+    radial-gradient(at 0% 0%, rgba(5, 1, 18, 0.562) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(25, 1, 19, 0.494) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(12, 6, 22, 0.447) 0px, transparent 70%);
+    background-attachment: fixed;
+
+    /* Transición suave para cuando desaparezca el contenedor completo */
+    opacity: 1;
+    transition: opacity 0.6s ease;
+}
+
+.loader-text {
+    display: flex;
+    gap: 0.5em;
+
+    /* Usa la variable que definiste arriba */
+    font-family: var(--font-mono); 
+    color: var(--text-main, #ffffff);
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+
+    /* Propiedades opcionales para suavizar el texto */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.word {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.word5 {
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+/* Desaparición escalonada entre palabras */
+#loader.hide .word:nth-child(1) {
+    opacity: 0;
+    transition-delay: 0s;
+}
+
+#loader.hide .word:nth-child(2) {
+    opacity: 0;
+    transition-delay: 0.10s;
+}
+
+#loader.hide .word:nth-child(3) {
+    opacity: 0;
+    transition-delay: 0.15s;
+}
+
+#loader.hide .word:nth-child(4) {
+    opacity: 0;
+    transition-delay: 0.2s;
+}
+
+/* El fondo desvanece su opacidad tras desvanecer las palabras */
+#loader.hide {
+    opacity: 0;
+    transition: opacity 0.6s ease 0.4s;
+    pointer-events: none; /* Para evitar interceptar clicks mientras se desvanece */
+}
+
+#loader.removed {
+    display: none;
+}
