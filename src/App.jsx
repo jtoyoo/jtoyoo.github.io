@@ -1,11 +1,13 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, useProgress, Sparkles } from '@react-three/drei';
+import { OrbitControls, useProgress } from '@react-three/drei';
 import { ArcadeScreen } from './ArcadeScreen';
 import { Floor } from './Floor';
 import { Environment } from './Environment';
 import { StreetLight } from './StreetLight';
 import { BlinkingLed } from './BlinkingLed';
+import { Stars, Sparkles, Cloud } from '@react-three/drei'
+
 import * as THREE from 'three';
 
 // 1. ELIMINADAS las importaciones estáticas de TerminalOverlay y Effects
@@ -112,10 +114,10 @@ export default function App() {
           <BlinkingLed position={[0.063, -0.32, -0.58]} color="#ff0044" />
           <CameraRig isZoomed={isZoomed} controlsRef={controlsRef} />
           <ArcadeScreen isZoomed={isZoomed} setIsZoomed={setIsZoomed} />
-          <Sparkles count={40} scale={[2.5, 2.5, 2.5]} size={1} speed={0.3} color="#2cf0f7" />
-          <Floor />
-          
-          {/* 3. Renderizado condicional seguro */}
+          <Floor />  
+          <Stars radius={100} depth={50} count={800} factor={4} saturation={0} fade speed={1} />
+          <Sparkles count={60} scale={3} size={1} speed={0.5} color="#00ffff" />
+
           {shouldRenderEffects && <Effects />}
         </Suspense>
 
