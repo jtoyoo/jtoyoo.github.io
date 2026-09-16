@@ -77,7 +77,6 @@ export default function App() {
   const [lowPerformance, setLowPerformance] = useState(false);
   const controlsRef = React.useRef();
 
-  // Detección inicial rápida de pantalla móvil/touch
   const isMobile = React.useMemo(() => {
     if (typeof window === 'undefined') return false;
     return /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 768;
@@ -85,7 +84,6 @@ export default function App() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // Si es móvil, evitamos arrancar los post-effects de entrada
       if (!isMobile) setShouldRenderEffects(true);
     }, 1000);
     
@@ -105,7 +103,7 @@ export default function App() {
       <Canvas 
         shadows={false}
         dpr={dpr}
-        performance={{ min: 0.2 }}
+        performance={{ min: 0.5 }}
         camera={{ position: [1.8, 1, 2.57], fov: 50 }}
         gl={{ 
           preserveDrawingBuffer: false, 
@@ -141,7 +139,7 @@ export default function App() {
           <Stars 
             radius={100} 
             depth={50} 
-            count={lowPerformance ? 200 : (isMobile ? 400 : 800)} 
+            count={lowPerformance ? 120 : (isMobile ? 250 : 700)} 
             factor={4} 
             saturation={0} 
             fade 
@@ -150,15 +148,15 @@ export default function App() {
 
           {!lowPerformance && (
             <Sparkles 
-              count={isMobile ? 20 : 60} 
-              scale={3} 
+              count={isMobile ? 10 : 35} 
+              scale={2} 
               size={1} 
               speed={0.5} 
-              color="#00ffff" 
+              color="#00ffdd" 
             />
           )}
 
-          {shouldRenderEffects && !lowPerformance && <Effects />}
+          {shouldRenderEffects && <Effects />}
         </Suspense>
 
         <OrbitControls
