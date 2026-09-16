@@ -1,9 +1,76 @@
-import React, { useEffect } from 'react';
-import { useGLTF, Html } from '@react-three/drei';
+import React, { useState, useEffect, useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { useGLTF, Text, useCursor } from '@react-three/drei';
 import './ArcadeScreen.css';
+
+const asciiJoystick = `  .                             .           .     .        .       .                   .    
+        .                                   .      .          .     .    .        .         
+                                            .          .                     .              
+          .                             .      . +@@@@-.       .                            
+               . .                                  =@@@*             .                  
+                                      . . .          =@@@@. . .                       .     
+                      .                    .. .   . ..@@@@@@:                    .          
+                              .        . .            @@@@@@@#:.                            
+                                         .            %@@@@@:    .    . .                   
+                    .  .                    .        .%@@@@@. .                      .      
+        .                                   .@+  .    %@@@@@.  .                            
+   .                -++++++++++++++++++++++@@@@@*++++-%@@@@@:+++++++++=      . .            
+                    :%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*%@@@@@-@@@@@@@+   .                     
+              .         =%.     .         :@@@@@*     %@@@@@.    +*                         
+           .             *+.              :@@@@@*     %@@@@@.   .@     .                    
+      .             .    +*              .:@@@@@*     %@@@@@.   -%.          .              
+             .   .       +*        +@@%:  :@@@@@*     %@@@@@.   -%  .                       
+                         +*       @@@.   .:@@@@@*     %@@@@@.   -%           .              
+                         +*      %@@*   . :@@@@@*     %@@@@@.   -%          .               
+  .                .   . +* .   .@@@+     :@@@@@*     %@@@@@.   -%                       .  
+  ..              .      +*    .%@@@#     :@@@@@*  .  %@@@@@.   -%               ...   .    
+                         +*  . .@@@@@     -@@@@@#     %@@@@@.   -%     .                    
+     .                   +*    .@@@@@.   .#@@@@@@.    %@@@@@.   -%                          
+                         =*    .@@@@@:  .%@@@@@@@@-   %@@@@@.   -% .           ..           
+                         =#    -@@@@@:  =@@@@@@@@@*.  %@@@@@.  .=#                   . .    
+             .      .     %=   *@@@@@:    %@@@@@@:   .%@@@@@.  :@:                    .     
+       .           ..      :: .@@@@@@:  . -@@@@@%     %@@@@@:  - .  .         .             
+                          . .+@@@@@@@:    :@@@@@*     %@@@@@@%.                             
+                        .   +@@@@@@@@:    :@@@@@*     %@@@@@@@#.         .                  
+                     .        =@@@@@@:    :@@@@@*     %@@@@@@.        ..                    
+       .                     ..@@@@@@:   .:@@@@@*     %@@@@@.    ..     .                   
+                   .   .    .  #@@@@@:    :@@@@@*     %@@@@@.                  ..          
+             .      .          #@@@@@:    :@@@@@*     %@@@@@.                               
+                               #@@@@@-    :@@@@@*    .@@@@@@.                         .     
+     .                        .@@@@@@@#.  :@@@@@*   +@@@@@@@:                               
+           .           .      *@@@@@%.    :@@@@@*     +@@@@@@.    .  .    ..  .             
+                            :@@@@@=  .    *@@@@@@.      :%@@@@+                 .    .      
+  .                      :*@@@%:::::::::::--------::::::::::#@@@%:.   .                  .  
+                    -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#                    .
+             .          .             . .%@@@@@@@@- .   .                                   
+       .                   .   .          :@@@@@+                 .  .          .  .        
+           . .       .  .        .         .@@@:    .                      .                
+            .            .                . .@+                                            .
+              .    .                         %.            .       .        .. .        .  
+                                                                           .          .   . 
+ .            .                                  .                      .                  .
+               .  .                    .      .        .     .       .          .   .   .   
+`; // Tu string ASCII sin cambios
 
 export function ArcadeScreen({ isZoomed, setIsZoomed, ...props }) {
   const { nodes, materials } = useGLTF('/maqui-transformed.glb');
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  
+  // Manejo idóneo del cursor mediante Drei
+  useCursor(hovered);
+
+  const textRef = useRef();
+
+  useFrame((state) => {
+    if (textRef.current) {
+      if (!isTransitioning) {
+        textRef.current.fillOpacity = (Math.sin(state.clock.elapsedTime * 3) + 1) / 2;
+      } else {
+        textRef.current.fillOpacity = 1;
+      }
+    }
+  });
 
   useEffect(() => {
     Object.values(materials).forEach((material) => {
@@ -11,9 +78,20 @@ export function ArcadeScreen({ isZoomed, setIsZoomed, ...props }) {
     });
   }, [materials]);
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+    if (!isZoomed && !isTransitioning) {
+      setIsTransitioning(true);
+      setIsZoomed(true);
+    }
+  };
+
+  useEffect(() => {
+    if (!isZoomed) setIsTransitioning(false);
+  }, [isZoomed]);
+
   return (
     <group {...props} dispose={null}>
-      {/* Geometría con proyección de sombra solo en las piezas principales */}
       <mesh castShadow geometry={nodes['2'].geometry} material={materials.PaletteMaterial001} position={[0.009, 0.346, -0.071]} rotation={[1.573, -0.18, -1.564]} scale={[0.094, 0.087, 0.082]} />
       <mesh castShadow geometry={nodes.console.geometry} material={materials['tripo_material_c07d0d50-f663-4333-8d12-d6154f4c649f.002']} position={[0.061, 0, 0]} scale={[0.824, 1, 0.99]} />
       <mesh geometry={nodes.geometry_0.geometry} material={materials.place_holder} />
@@ -23,12 +101,7 @@ export function ArcadeScreen({ isZoomed, setIsZoomed, ...props }) {
       
       <group position={[0.211, 0.292, -0.062]} rotation={[-Math.PI, 0, -0.303]} scale={[0.089, 0.079, 0.144]}>
         <mesh geometry={nodes.Mesh006.geometry}>
-          <meshStandardMaterial 
-            roughness={0.4} 
-            metalness={0.6} 
-            envMapIntensity={2.0} 
-            color="#323439"
-          />
+          <meshStandardMaterial roughness={0.4} metalness={0.6} envMapIntensity={2.0} color="#323439" />
         </mesh>
         <mesh geometry={nodes.Mesh006_1.geometry} material={materials.PaletteMaterial005} />
       </group>
@@ -37,47 +110,48 @@ export function ArcadeScreen({ isZoomed, setIsZoomed, ...props }) {
       <mesh geometry={nodes.antenna02.geometry} material={materials['place_holder.003']} position={[12.892, -1.098, -2.774]} rotation={[0, 1.565, 0]} scale={0.02} />
       <mesh geometry={nodes.lampBulb.geometry} material={materials.PaletteMaterial002} position={[12.892, -1.098, -2.774]} rotation={[0, 1.565, 0]} scale={0.02} />
 
-      <group 
-        position={[0.202, 0.288, -0.065]} 
-        rotation={[-1.572, 1.269, -3.132]}
-      >
-        <Html
-          transform
-          occlude={!isZoomed} 
-          distanceFactor={isZoomed ? 0.15 : 0.11}
-          position={[0, 0, 0.025]}
-          className={`arcade-html-container ${isZoomed ? 'zoomed' : ''}`}
+      <group position={[0.202, 0.288, -0.065]} rotation={[-1.572, 1.269, -3.132]}>
+        <mesh 
+          onClick={handleClick}
+          onPointerOver={(e) => { e.stopPropagation(); if (!isZoomed) setHovered(true); }}
+          onPointerOut={(e) => { e.stopPropagation(); setHovered(false); }}
         >
-          <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
-            {!isZoomed && (
-              <div
-                onClick={() => setIsZoomed(true)}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  zIndex: 10,
-                  cursor: 'pointer',
-                  background: 'transparent',
-                  pointerEvents: 'auto' 
-                }}
-              />
-            )}
+          <planeGeometry args={[0.28, 0.20]} />
+          <meshStandardMaterial 
+            color="#05060d" 
+            roughness={0.2}
+            metalness={0.8}
+            emissive={isTransitioning ? "#7c57f6" : "#120e29"}
+            emissiveIntensity={isTransitioning ? 1.5 : 0.6}
+          />
+        </mesh>
 
-            <iframe
-              src="/index.html"
-              style={{ 
-                width: '100%', 
-                height: '100%', 
-                border: 'none',
-                pointerEvents: isZoomed ? 'auto' : 'none' 
-              }}
-              title="Portfolio Jose Toyo"
-            />
-          </div>
-        </Html>
+        <Text
+          ref={textRef}
+          font="/assets/fonts/SpaceMono.ttf" 
+          position={[-0.078, 0, 0.03]}
+          rotation={[0, 0, -1.58]}
+          fontSize={0.022}
+          color={isTransitioning ? "#1d8ac9" : "#5acbf7"}
+          anchorX="center"
+          anchorY="middle"
+        >
+          {isTransitioning ? "҉" : ">> tap to start <<"}
+        </Text>
+
+        <Text
+          font="/assets/fonts/SpaceMono.ttf" 
+          position={[0.025, 0, 0.03]}
+          rotation={[0, 0, -1.58]}
+          fontSize={0.0035}
+          lineHeight={1.1}
+          color={isTransitioning ? "#b615d6" : "#f90faf"}
+          anchorX="center"
+          anchorY="middle"
+          whiteSpace="pre"
+        >
+          {asciiJoystick}
+        </Text>
       </group>
     </group>
   );

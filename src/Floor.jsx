@@ -1,6 +1,50 @@
 import React, { Suspense } from 'react';
 import { MeshReflectorMaterial, Text } from '@react-three/drei';
 
+const asciiJo = `    .     .         .      .    .             .-=:   .         .   .                 
+             . .      .     .     .            .+@@@=    .  .                        
+ .                    .    .      .       .      .@@@@.                              
+                 .           .           .        #@@@@*.                            
+             .                              .     -@@@@@@@@:                 .       
+ .            .             .  .                  :@@@@@@:        .         .        
+.            .       .                            .@@@@@* .    ..       . .          
+                                  .      :#       .@@@@@=                 . .        
+      .          .        .            .#@@@-.    .@@@@@=          .    .            
+   .              +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.@@@@@=%@@@@@@@@.               . .
+     .          .  ..@=................*@@@@@:.....@@@@@=.....#+                     
+      ..             .@.               *@@@@@:    .@@@@@=    *+ .                    
+  .                   #=               *@@@@@:    .@@@@@=    #=      .      .      . 
+          .           #=        .%@@= .*@@@@@:    .@@@@@=   .#-  .            .      
+                      #=      .@@@.    *@@@@@:    .@@@@@=    #-        .  .  .. .  ..
+             .        *=  .  .@@@-     *@@@@@:    .@@@@@=    #-                .     
+                      *=     -@@@:     *@@@@@:    .@@@@@=    %-              .       
+  . .  .              *=.   .@@@@-     *@@@@@:    .@@@@@=..  %-    .     .   .       
+       .        .     *= .. .@@@@=.    #@@@@@-    .@@@@@=    %-                      
+     .                *=    :@@@@%     @@@@@@*    .@@@@@= .  %-       .              
+     .                *=    :@@@@@.  .%@@@@@@@=   .@@@@@=.   %-  .                  .
+                      +*  . *@@@@@. =@@@@@@@@@@#. .@@@@@=    %:                  .   
+.              .      -%.   @@@@@@.   -@@@@@@%  . .@@@@@=   =% .                     
+                   .   .*. :@@@@@@.    %@@@@@=    .@@@@@%  +-              .         
+                         .=@@@@@@@.    #@@@@@:    .@@@@@@%.                        . 
+                    ..  +@@@@@@@@@.    *@@@@@:    .@@@@@@@@#:       .                
+        .          ...    .@@@@@@@. .  *@@@@@:.   .@@@@@@=                  .        
+       .            .  . . :@@@@@@.    *@@@@@:    .@@@@@%     ..                .    
+                       .   .@@@@@@.    *@@@@@:  . .@@@@@=                   .    ..  
+         .                  @@@@@@.    *@@@@@:    .@@@@@=                            
+                      .    .@@@@@@.    *@@@@@:   .:@@@@@=                            
+  .                        :@@@@@@@#.  *@@@@@:  :@@@@@@@%            .    ..         
+.                          @@@@@@@.    *@@@@@:    :@@@@@@-                     .     
+         .               :@@@@@-.      %@@@@@+      .%@@@@%     .    ..          .  .
+         .         .  .#@@@#:         :-------.        .-@@@@-           .           
+                 =@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%. .       ..     .
+       .     .  .....................:########*......................           ..   
+ .    .                     .          *@@@@@:         ..                            
+               .                   .    =@@%. .                   .              .  .
+.                              .    .    *@: .          .                            
+          . .     .                   .  .*                .   .                     
+       .  .                                                                          
+`;
+
 export function Floor() {
   return (
     <group>
@@ -42,31 +86,35 @@ export function Floor() {
         </Text>
 
         <Text
-          maxWidth={4}
+          maxWidth={5}
           lineHeight={1}
           font="/assets/fonts/SpaceMono.ttf" 
           fontSize={1}
           position={[-0.4, -0.40, -0.1]}
           rotation={[-Math.PI / 2, 0, 1.6]}
         >
-          [   ]
-          <meshStandardMaterial color="#094653" roughness={0.2} metalness={0.8} />
+          [     ]
+          <meshStandardMaterial color="#0b2f38" roughness={0.2} metalness={0.8} />
+        </Text>
+
+        <Text
+          font="/assets/fonts/SpaceMono.ttf" 
+          position={[-0.2, -0.41, -0.1]}
+          rotation={[-Math.PI / 2, 0, 1.6]}
+          fontSize={0.095}
+          lineHeight={1.1}
+          anchorX="center"
+          anchorY="middle"
+          whiteSpace="pre"
+        >
+          {asciiJo}
+          <meshStandardMaterial color="#2c2453" roughness={0.2} metalness={0.8} />
         </Text>
       </Suspense>
 
       <mesh rotation={[Math.PI / -2, 0, 0]} position={[-0.2, -0.419, 0]} receiveShadow>
-        <circleGeometry args={[3.2, 6]} />
-        <MeshReflectorMaterial
-          resolution={512}
-          mirror={0.5}
-          mixStrength={10}
-          roughness={0.6}
-          depthScale={1.2}
-          minDepthThreshold={0.001}
-          maxDepthThreshold={3.0}
-          color="#55778c"
-          metalness={0.2}
-        />
+        <circleGeometry args={[3, 6]} />
+        <meshStandardMaterial color="#05060d" roughness={0.5} metalness={0.9} />
       </mesh>
     </group>
   );
