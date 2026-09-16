@@ -8,7 +8,6 @@ import { StreetLight } from './StreetLight';
 import { BlinkingLed } from './BlinkingLed';
 import { Stars, Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
-import { useAdaptiveQuality } from './useAdaptiveQuality';
 
 const POS_INITIAL = new THREE.Vector3(1.8, 1, 2.57);
 const TARGET_INITIAL = new THREE.Vector3(0, 0, 0);
@@ -72,10 +71,26 @@ function CameraRig({ isZoomed, controlsRef }) {
 
 export default function App() {
   const [isZoomed, setIsZoomed] = useState(false);
+  const [shouldRenderEffects, setShouldRenderEffects] = useState(false); 
+  const [dpr, setDpr] = useState(1);
+  // Estado para desactivar elementos pesados si cae el rendimiento
+  const [lowPerformance, setLowPerformance] = useState(false);
   const controlsRef = React.useRef();
 
-  // Integración del Hook híbrido detect-gpu + monitor adaptativo
-  const { quality, degradeQuality, setQuality } = useAdaptiveQuality();
+  // Detección inicial rápida de pantalla móvil/touch
+  const isMobile = React.useMemo(() => {
+    if (typeof window === 'undefined') return false;
+    return /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 768;
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      // Si es móvil, evitamos arrancar los post-effects de entrada
+      if (!isMobile) setShouldRenderEffects(true);
+    }, 1000);
+    
+    return () => clearTimeout(timer);
+  }, [isMobile]);
 
   useEffect(() => {
     const handleMessage = (event) => {
@@ -85,36 +100,32 @@ export default function App() {
     return () => window.removeEventListener('message', handleMessage);
   }, []);
 
-  // Evitamos montar el Canvas hasta que detect-gpu determine la potencia
-  if (quality.loading) {
-    return <div style={{ width: '100vw', height: '100dvh', background: '#05050d' }} />;
-  }
-
   return (
     <div style={{ width: '100vw', height: '100dvh', position: 'relative', overflow: 'hidden', background: '#05050d' }}>
       <Canvas 
         shadows={false}
-        dpr={quality.dpr}
+        dpr={dpr}
         performance={{ min: 0.2 }}
         camera={{ position: [1.8, 1, 2.57], fov: 50 }}
         gl={{ 
           preserveDrawingBuffer: false, 
           powerPreference: 'high-performance', 
-          antialias: quality.tier >= 2,
-          precision: quality.isMobile && quality.tier < 2 ? 'mediump' : 'highp'
+          antialias: false,
+          precision: isMobile ? 'lowp' : 'highp' // Bajamos precisión de shaders en móviles
         }}
       >
-        {/* Monitorea los FPS: ajusta DPR dinámicamente y degrada recursos si bajan los FPS */}
+        {/* Monitoriza los FPS. Si caen, apaga efectos pesados y baja el dpr */}
         <PerformanceMonitor
           onChange={({ factor }) => {
-            setQuality(prev => ({
-              ...prev,
-              dpr: Math.max(0.5, Math.min(prev.dpr, factor * prev.dpr))
-            }));
+            setDpr(Math.max(0.5, Math.min(1.2, factor * 1.2)));
           }}
-          onDecline={degradeQuality}
+          onDecline={() => {
+            setLowPerformance(true);
+            setShouldRenderEffects(false); // Desactiva Post-Processing al detectar caída de FPS
+          }}
         />
         
+        {/* Reduce el Pixel Ratio automáticamente si la cámara se mueve rápido */}
         <AdaptiveDpr />
 
         <Suspense fallback={null}>
@@ -126,19 +137,20 @@ export default function App() {
           <ArcadeScreen isZoomed={isZoomed} setIsZoomed={setIsZoomed} />
           <Floor />  
 
+          {/* Reducimos la cantidad de partículas drasticamente si baja el rendimiento */}
           <Stars 
             radius={100} 
             depth={50} 
-            count={quality.starsCount} 
+            count={lowPerformance ? 200 : (isMobile ? 400 : 800)} 
             factor={4} 
             saturation={0} 
             fade 
             speed={1} 
           />
 
-          {quality.showSparkles && (
+          {!lowPerformance && (
             <Sparkles 
-              count={quality.isMobile ? 30 : 60} 
+              count={isMobile ? 20 : 60} 
               scale={3} 
               size={1} 
               speed={0.5} 
@@ -146,7 +158,7 @@ export default function App() {
             />
           )}
 
-          {quality.enableEffects && <Effects />}
+          {shouldRenderEffects && !lowPerformance && <Effects />}
         </Suspense>
 
         <OrbitControls
