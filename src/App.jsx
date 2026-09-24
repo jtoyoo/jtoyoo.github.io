@@ -134,8 +134,8 @@ export default function App() {
             count={isMobile ? 20 : 50} 
             scale={2} 
             size={1} 
-            speed={0.5} 
-            color="#00ffff" 
+            speed={0.3} 
+            color="#ff00ee" 
           />
 
           {shouldRenderEffects && <Effects />}
